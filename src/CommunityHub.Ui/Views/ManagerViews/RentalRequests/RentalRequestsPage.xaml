@@ -1,0 +1,128 @@
+<Page x:Class="CommunityHub.Ui.Views.ManagerViews.RentalRequests.RentalRequestsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="Rental Requests">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Spacer -->
+        <StackPanel Grid.Row="0" Margin="10,10,10,5"/>
+
+        <!-- Filter po statusu - Panel.ZIndex osigurava da dropdown ide PREKO liste -->
+        <Grid Grid.Row="1" Margin="10,5" Panel.ZIndex="999">
+            <ComboBox x:Name="StatusFilter"
+                      Width="180"
+                      HorizontalAlignment="Left"
+                      SelectionChanged="StatusFilter_Changed">
+                <ComboBoxItem Content="All" IsSelected="True"/>
+                <ComboBoxItem Content="Pending"/>
+                <ComboBoxItem Content="Pending (Date Change)"/>
+                <ComboBoxItem Content="Approved"/>
+                <ComboBoxItem Content="Rejected"/>
+            </ComboBox>
+        </Grid>
+
+        <!-- Requests List -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="RequestsList" Margin="10">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1"
+                                Background="White" Margin="0,5" Padding="10">
+                            <StackPanel>
+                                <!-- Naziv prostorije i status -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding SpaceName}"
+                                               FontWeight="Bold" FontSize="14"
+                                               Grid.Column="0"/>
+                                    <Border Grid.Column="1"
+                                            Margin="10,0,0,0"
+                                            BorderThickness="1"
+                                            Background="White"
+                                            Padding="8,2"
+                                            VerticalAlignment="Center">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Status}" Value="Approved">
+                                                        <Setter Property="BorderBrush" Value="#FF228B22"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Status}" Value="Pending">
+                                                        <Setter Property="BorderBrush" Value="#FFFFA500"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Status}" Value="Pending (Date Change)">
+                                                        <Setter Property="BorderBrush" Value="#FFFFA500"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Status}" Value="Rejected">
+                                                        <Setter Property="BorderBrush" Value="#FFDC1414"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <TextBlock Text="{Binding Status}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Approved">
+                                                            <Setter Property="Foreground" Value="#FF228B22"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Pending">
+                                                            <Setter Property="Foreground" Value="#FFFFA500"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Pending (Date Change)">
+                                                            <Setter Property="Foreground" Value="#FFFFA500"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Rejected">
+                                                            <Setter Property="Foreground" Value="#FFDC1414"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Stanar -->
+                                <TextBlock Margin="0,4,0,0">
+                                    <Run Text="Tenant: "/>
+                                    <Run Text="{Binding TenantName}" FontWeight="SemiBold"/>
+                                </TextBlock>
+
+                                <!-- Opseg datuma -->
+                                <TextBlock Text="{Binding DateRangeString}" Margin="0,2,0,0"/>
+
+                                <!-- Rental period tip -->
+                                <TextBlock Text="{Binding RentalPeriodLabel}"
+                                           FontWeight="Bold" Margin="0,2,0,8"/>
+
+                                <!-- Dugme za akciju -->
+                                <Button Content="{Binding ButtonText}"
+                                        Tag="{Binding Id}"
+                                        Visibility="{Binding ButtonVisibility}"
+                                        Click="Action_Click"
+                                        Padding="8,4"
+                                        BorderBrush="Black" BorderThickness="1"
+                                        Background="White"
+                                        HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>

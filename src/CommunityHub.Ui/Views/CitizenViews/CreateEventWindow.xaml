@@ -1,0 +1,215 @@
+﻿<Window x:Class="CommunityHub.Ui.Views.CitizenViews.CreateEventWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Event Creation" Height="820" Width="600"
+        WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True" SnapsToDevicePixels="True"
+        ResizeMode="NoResize">
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#EFF6FF" Offset="0.0"/>
+            <GradientStop Color="#E0E7FF" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#111827"/>
+            <Setter Property="BorderBrush" Value="#111827"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="SelectionBrush" Value="#3B82F6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="8" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#2563EB"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#2563EB"/>
+                                <Setter Property="Background" Value="#F8FAFC"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#111827"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DatePicker">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8" SnapsToDevicePixels="True">
+                            <Grid x:Name="PART_Root" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <DatePickerTextBox x:Name="PART_TextBox" Grid.Column="0" 
+                                                   Focusable="{TemplateBinding Focusable}" 
+                                                   HorizontalContentAlignment="Stretch" 
+                                                   VerticalContentAlignment="Center"
+                                                   Background="Transparent"
+                                                   BorderThickness="0"
+                                                   Padding="12,0,0,0"
+                                                   FontSize="{TemplateBinding FontSize}"/>
+
+                                <Button x:Name="PART_Button" Grid.Column="1" Width="30" Margin="0,0,8,0"
+                                        HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                        Focusable="False" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <TextBlock Text="📅" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_Root}" StaysOpen="False"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Label" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#111827"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="Button" TargetType="Button">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#111827"/>
+            <Setter Property="BorderBrush" Value="#111827"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="10" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F9FAFB"/>
+                                <Setter Property="BorderBrush" Value="#2563EB"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#E2E8F0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="35,25,35,35">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" HorizontalAlignment="Left" Style="{StaticResource Button}" Padding="14,8" Command="{Binding CloseCommand}" Margin="0,0,0,25">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="❌" Margin="0,0,8,0" VerticalAlignment="Center" FontSize="14"/>
+                <TextBlock Text="Close" VerticalAlignment="Center" FontSize="16"/>
+            </StackPanel>
+        </Button>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+            <StackPanel>
+
+                <TextBlock Text="Event Name:" Style="{StaticResource Label}"/>
+                <TextBox x:Name="NameTextBox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Description:" Style="{StaticResource Label}"/>
+                <TextBox x:Name="DescriptionTextBox" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Height="90" TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top" Margin="0,0,0,20"/>
+
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Date:" Style="{StaticResource Label}"/>
+                        <DatePicker x:Name="DatePickerControl" SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged}" Height="49"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Time:" Style="{StaticResource Label}"/>
+                        <TextBox x:Name="StartTimeTextBox" Text="{Binding StartTime, UpdateSourceTrigger=PropertyChanged}" ToolTip="Format - HH:mm"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Duration (minutes):" Style="{StaticResource Label}"/>
+                        <TextBox x:Name="DurationTextBox" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Min. number of volunteers:" Style="{StaticResource Label}"/>
+                        <TextBox x:Name="MinVolunteersTextBox" Text="{Binding MinVolunteers, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Text="Required things (separated by a comma):" Style="{StaticResource Label}"/>
+                <TextBox x:Name="ItemsTextBox" Text="{Binding ItemsRawText, UpdateSourceTrigger=PropertyChanged}" Height="85" TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top" Margin="0,0,0,15"/>
+
+                <TextBlock x:Name="ValidationErrorTextBlock"
+                           Text="{Binding ValidationError}"
+                           Visibility="{Binding IsValidationErrorVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                           Foreground="#DC2626" FontSize="13" FontWeight="SemiBold"
+                           Margin="0,5,0,15" TextWrapping="Wrap"/>
+
+                <Button Content="Create Event" 
+                        Style="{StaticResource Button}" 
+                        Command="{Binding CreateEventCommand}"
+                        Background="#2563EB" Foreground="White" BorderBrush="#111827"
+                        Padding="0,16" FontSize="18" HorizontalAlignment="Stretch"/>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

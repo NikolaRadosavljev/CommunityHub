@@ -1,0 +1,50 @@
+<Page x:Class="CommunityHub.Ui.Views.CommonRoomsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Common rooms" Background="#EAEAEA">
+	<ScrollViewer VerticalScrollBarVisibility="Hidden" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+		<StackPanel Margin="15">
+
+			<Button Content="+ Common room"
+                    Margin="0,0,0,15" Padding="15,10"
+                    Background="#333333" Foreground="White" BorderThickness="0"
+                    FontSize="14" FontWeight="Bold"
+                    Click="AddCommonRoom_Click" Cursor="Hand"/>
+
+			<ItemsControl x:Name="CommonRoomsItemsControl">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,15" Padding="15">
+							<StackPanel>
+								<TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="0,0,0,5"/>
+								<TextBlock Text="{Binding Description}" FontSize="12" TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto"/>
+										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="Auto"/>
+									</Grid.ColumnDefinitions>
+
+									<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+										<TextBlock Text="Floor Number: " FontSize="11"/>
+										<TextBlock Text="{Binding FloorNumber}" FontSize="11" Margin="0,0,10,0"/>
+										<TextBlock Text="|" FontSize="11" Margin="0,0,10,0"/>
+										<TextBlock Text="Rental Period: " FontSize="11"/>
+										<TextBlock Text="{Binding RentalPeriod}" FontSize="11"/>
+									</StackPanel>
+
+									<Button Grid.Column="2" Content="Calendar"
+                                            Padding="15,5" Background="White" BorderBrush="Black" BorderThickness="1"
+                                            FontWeight="Bold" FontSize="11"
+                                            Tag="{Binding Id}" Click="Calendar_Click" Cursor="Hand"/>
+								</Grid>
+							</StackPanel>
+						</Border>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+
+		</StackPanel>
+	</ScrollViewer>
+</Page>

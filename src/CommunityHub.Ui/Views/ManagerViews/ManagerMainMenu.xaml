@@ -1,0 +1,29 @@
+<UserControl x:Class="CommunityHub.Ui.Views.ManagerMainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Background="#80000000">
+        <Border HorizontalAlignment="Right" Width="280" Background="#C4C4C4" Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="X" FontSize="32" FontWeight="Bold" HorizontalAlignment="Right" Cursor="Hand" MouseLeftButtonUp="CloseMenu_Click" Margin="0,0,0,20"/>
+
+                <StackPanel Grid.Row="1">
+                    <Button Content="Buildings" Background="Transparent" Foreground="Black" BorderThickness="0" HorizontalAlignment="Left" FontSize="16" Margin="0,10" Click="MenuRefresh_Click"/>
+                    <Button Content="Building registration" Background="Transparent" Foreground="Black" BorderThickness="0" HorizontalAlignment="Left" FontSize="16" Margin="0,10" Click="MenuRegisterBuilding_Click"/>
+                    <Button Content="Membership requests" Background="Transparent" Foreground="Black" BorderThickness="0" HorizontalAlignment="Left" FontSize="16" Margin="0,10" Click="MenuManageRequests_Click"/>
+                    <Button Content="Rental requests" Background="Transparent" Foreground="Black" BorderThickness="0" HorizontalAlignment="Left" FontSize="16" Margin="0,10" Click="MenuRentalRequests_Click"/>
+                    <Button Content="Assemblies" Background="Transparent" Foreground="Black" BorderThickness="0" HorizontalAlignment="Left" FontSize="16" Margin="0,10" Click="MenuAssemblies_Click"/>
+                    <Button Content="Unresolved problems" Background="Transparent" Foreground="Black" BorderThickness="0" HorizontalAlignment="Left" FontSize="16" Margin="0,10" Click="MenuUnresolvedProblems_Click"/>
+                    <Button Content="Demo Mode" Background="Transparent" Foreground="Black" BorderThickness="0" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Margin="0,10" Click="MenuDemoMode_Click"/>
+                </StackPanel>
+
+                <Button Grid.Row="2" Content="Log out" Background="Transparent" Foreground="Black" BorderThickness="0" HorizontalAlignment="Center" FontSize="16" Margin="0,10,0,10" Click="LogoutButton_Click"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

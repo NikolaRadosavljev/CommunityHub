@@ -1,0 +1,65 @@
+<Window x:Class="CommunityHub.Ui.Views.ManagerMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:CommunityHub.Ui.Views"
+        xmlns:mgr="clr-namespace:CommunityHub.Ui.Views.ManagerViews"
+        Title="Manager Dashboard" Height="750" Width="430"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ShowActivated="True"
+        Background="#EAEAEA">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <!-- Dynamic Header -->
+        <Border Grid.Row="0" x:Name="HeaderBorder" Background="#333333" Padding="15,15,15,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="BtnBack" Text="«" FontSize="24" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonUp="BackButton_Click" Visibility="Collapsed"/>
+
+                <TextBlock x:Name="TxtTitle" Grid.Column="1" Text="Buildings" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <Button x:Name="BtnHeaderAction" Grid.Column="2" Content="☰" Foreground="White" FontSize="18" FontWeight="Bold" Background="Transparent" BorderThickness="0" Padding="8,0" HorizontalAlignment="Right" VerticalAlignment="Center" Click="HeaderAction_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- MAIN FRAME FOR PAGES -->
+        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated" />
+
+        <!-- BOTTOM NAV -->
+        <local:ManagerSubmenu Grid.Row="2"
+                              RefreshClicked="BottomNav_BuildingsClick"
+                              ManageRequestsClicked="BottomNav_MembershipsClick"
+                              RentalRequestsClicked="SideNav_RentalRequestsClick"
+                              AssembliesClicked="BottomNav_AssembliesClick" />
+
+        <!-- TOAST NOTIFICATION OVERLAY (above all content) -->
+        <mgr:ToastNotification x:Name="Toast" Grid.Row="0" Grid.RowSpan="3"
+                               HorizontalAlignment="Right" VerticalAlignment="Top"
+                               Margin="0,8,8,0" Panel.ZIndex="9999"/>
+
+        <!-- SIDE MENU OVERLAY -->
+        <local:ManagerMainMenu x:Name="SideMenuOverlay"
+                               Grid.RowSpan="3"
+                               Visibility="Collapsed"
+                               CloseMenuClicked="CloseMenu_Click"
+                               RefreshClicked="SideNav_BuildingsClick"
+                               RegisterBuildingClicked="SideNav_RegisterBuildingClick"
+                               ManageRequestsClicked="SideNav_ManageRequestsClick"
+                               RentalRequestsClicked="SideNav_RentalRequestsClick"
+                               AssembliesClicked="SideNav_AssembliesClick"
+                               UnresolvedProblemsClicked="SideNav_UnresolvedProblemsClick"
+                               DemoModeClicked="SideNav_DemoModeClick"
+                               LogoutClicked="BottomNav_LogoutClick" />
+    </Grid>
+</Window>

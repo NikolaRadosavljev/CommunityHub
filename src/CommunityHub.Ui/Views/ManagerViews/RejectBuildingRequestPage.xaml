@@ -1,0 +1,65 @@
+<Page x:Class="CommunityHub.Ui.Views.RejectBuildingRequestPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Title="Decline request"
+      Background="#EAEAEA">
+    <Page.Resources>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,10" Padding="15">
+            <StackPanel>
+                <TextBlock Text="Request details" FontSize="18" HorizontalAlignment="Center" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                <TextBlock Text="{Binding TenantName}" FontSize="16" Margin="0,0,0,10"/>
+                <TextBlock Text="{Binding Address}" FontSize="12" Margin="0,0,0,10"/>
+                <WrapPanel Margin="0,0,0,10">
+                    <TextBlock Text="{Binding FlatNumber, StringFormat='Flat number: {0}'}" FontSize="12" Margin="0,0,15,0"/>
+                    <TextBlock Text="Floor number: ?" FontSize="12"/>
+                </WrapPanel>
+                <WrapPanel Margin="0,0,0,10">
+                    <TextBlock Text="{Binding Settlement}" FontSize="12" Margin="0,0,15,0"/>
+                    <TextBlock Text="{Binding City}" FontSize="12"/>
+                </WrapPanel>
+                <TextBlock Text="{Binding CreatedAt, StringFormat='dd.MM.yyyy'}" FontSize="12"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,10" Padding="15">
+            <StackPanel>
+                <TextBlock Text="Reasoning (optional)" FontSize="18" FontWeight="Normal" Margin="0,0,0,10"/>
+                <TextBox x:Name="ReasonTextBox"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto"
+                         BorderBrush="Black"
+                         BorderThickness="1"
+                         FontSize="24"
+                         Height="220"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="0,1,0,0" Padding="15">
+            <Button Content="Decline Request" Style="{StaticResource ActionButton}" Click="RejectButton_Click"/>
+        </Border>
+    </Grid>
+</Page>

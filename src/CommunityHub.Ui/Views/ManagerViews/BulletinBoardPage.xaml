@@ -1,0 +1,265 @@
+<Page x:Class="CommunityHub.Ui.Views.BulletinBoardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Bulletin board"
+      Background="#EAEAEA">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="TxtBuildingInfo"
+                   Grid.Row="0"
+                   Margin="5,0,5,8"
+                   FontSize="12"
+                   FontWeight="SemiBold"
+                   TextWrapping="Wrap"/>
+
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Background="White" Padding="8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- TAB BUTTONS -->
+                <Grid Grid.Row="0" Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="BtnAdsTab" Grid.Column="0" Content="Ads" Margin="0,0,2,0" Click="AdsTab_Click"/>
+                    <Button x:Name="BtnStatisticsTab" Grid.Column="1" Content="Statistics" Margin="2,0,2,0" Click="StatisticsTab_Click"/>
+                    <Button x:Name="BtnReportTab" Grid.Column="2" Content="Report" Margin="2,0,0,0" Click="ReportTab_Click"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <!-- ADS PANEL -->
+                    <Border x:Name="AdsPanel" Visibility="Visible">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <ComboBox x:Name="CbStatusFilter" Height="28" Margin="0,0,0,8" SelectionChanged="CbStatusFilter_SelectionChanged">
+                                <ComboBoxItem Content="All statuses" IsSelected="True"/>
+                                <ComboBoxItem Content="Active"/>
+                                <ComboBoxItem Content="Archived"/>
+                            </ComboBox>
+
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                <StackPanel>
+                                    <ItemsControl x:Name="AdsItemsControl">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,0,8" Padding="8">
+                                                    <StackPanel>
+                                                        <Grid Margin="0,0,0,6">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Text="{Binding TypeLabel}" FontSize="14" FontWeight="Bold"/>
+                                                            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Padding="6,2" Background="White">
+                                                                <TextBlock Text="{Binding StatusLabel}" FontSize="11" FontWeight="SemiBold"/>
+                                                            </Border>
+                                                        </Grid>
+
+                                                        <TextBlock Text="{Binding TenantLabel}" FontSize="12" Margin="0,0,0,4"/>
+                                                        <WrapPanel>
+                                                            <TextBlock Text="{Binding CategoryLabel}" FontSize="11" Margin="0,0,10,0"/>
+                                                            <TextBlock Text="|" FontSize="11" Margin="0,0,10,0"/>
+                                                            <TextBlock Text="{Binding DateRangeLabel}" FontSize="11"/>
+                                                        </WrapPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <TextBlock x:Name="TxtEmptyAds"
+                                               Text="No ads found for selected filter."
+                                               FontSize="12"
+                                               FontStyle="Italic"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,10,0,0"
+                                               Visibility="Collapsed"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+
+                    <!-- STATISTICS PANEL -->
+                    <Border x:Name="StatisticsPanel" Visibility="Collapsed">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox x:Name="CbPeriodType" Grid.Column="0" Margin="0,0,4,0" Height="28" SelectionChanged="CbPeriodType_SelectionChanged">
+                                        <ComboBoxItem Content="Year" IsSelected="True"/>
+                                        <ComboBoxItem Content="Month"/>
+                                    </ComboBox>
+
+                                    <ComboBox x:Name="CbYear" Grid.Column="1" Margin="4,0,0,0" Height="28" SelectionChanged="StatisticsFilter_Changed"/>
+                                </Grid>
+
+                                <ComboBox x:Name="CbMonth" Height="28" Margin="0,0,0,8" SelectionChanged="StatisticsFilter_Changed">
+                                    <ComboBoxItem Content="All months" IsSelected="True"/>
+                                    <ComboBoxItem Content="January" Tag="1"/>
+                                    <ComboBoxItem Content="February" Tag="2"/>
+                                    <ComboBoxItem Content="March" Tag="3"/>
+                                    <ComboBoxItem Content="April" Tag="4"/>
+                                    <ComboBoxItem Content="May" Tag="5"/>
+                                    <ComboBoxItem Content="June" Tag="6"/>
+                                    <ComboBoxItem Content="July" Tag="7"/>
+                                    <ComboBoxItem Content="August" Tag="8"/>
+                                    <ComboBoxItem Content="September" Tag="9"/>
+                                    <ComboBoxItem Content="October" Tag="10"/>
+                                    <ComboBoxItem Content="November" Tag="11"/>
+                                    <ComboBoxItem Content="December" Tag="12"/>
+                                </ComboBox>
+
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0,0,4,0" Padding="6">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock x:Name="TxtOffersCount" Text="0" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="Offers help" FontSize="11" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="4,0,0,0" Padding="6">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock x:Name="TxtNeedsCount" Text="0" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="Needs help" FontSize="11" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <TextBlock Text="By category (offers / needs):" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                <ItemsControl x:Name="CategorySplitItemsControl" Margin="0,0,0,10">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,0,4" Padding="6">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Category}" FontSize="12" FontWeight="SemiBold"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding SummaryLabel}" FontSize="12"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <TextBlock Text="Current state:" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0,0,4,0" Padding="6">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock x:Name="TxtActiveNowCount" Text="0" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="Active" FontSize="11" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="4,0,0,0" Padding="6">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock x:Name="TxtArchivedNowCount" Text="0" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="Archived" FontSize="11" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <TextBlock Text="Active ads by category:" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                <ItemsControl x:Name="ActiveByCategoryItemsControl" Margin="0,0,0,10">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,0,4" Padding="6">
+                                                <DockPanel>
+                                                    <TextBlock Text="{Binding Category}" FontSize="12" FontWeight="SemiBold" DockPanel.Dock="Left"/>
+                                                    <TextBlock Text="{Binding ActiveCount}" FontSize="12" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                                </DockPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <Border BorderBrush="Black" BorderThickness="1" Padding="6">
+                                    <StackPanel>
+                                        <TextBlock Text="Most helpful tenant:" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock x:Name="TxtMostHelpfulTenant" FontSize="12" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+
+                    <!-- REPORT PANEL -->
+                    <Border x:Name="ReportPanel" Visibility="Collapsed">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Report - Active Ads on Board" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,8"/>
+
+                            <ComboBox x:Name="CbReportTypeFilter" Grid.Row="1" Height="28" Margin="0,0,0,8" SelectionChanged="ReportTypeFilter_Changed">
+                                <ComboBoxItem Content="All" IsSelected="True"/>
+                                <ComboBoxItem Content="Offers Help"/>
+                                <ComboBoxItem Content="Needs Help"/>
+                            </ComboBox>
+
+                            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtReportShowing" Text="Showing: All (0)" FontSize="11" Margin="0,0,0,6" Foreground="#555555"/>
+                                    <ItemsControl x:Name="ReportAdsItemsControl">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,0,8" Padding="8">
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding TenantLabel}" FontSize="13" FontWeight="SemiBold"/>
+                                                        <WrapPanel Margin="0,2,0,0">
+                                                            <TextBlock Text="{Binding CategoryLabel}" FontSize="11" Margin="0,0,10,0"/>
+                                                            <TextBlock Text="|" FontSize="11" Margin="0,0,10,0"/>
+                                                            <TextBlock Text="{Binding DateRangeLabel}" FontSize="11"/>
+                                                        </WrapPanel>
+                                                        <TextBlock Text="{Binding TypeLabel}" FontSize="11" Foreground="#555555" Margin="0,2,0,0"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <TextBlock x:Name="TxtReportTotal" Text="Total: 0 active ads" FontSize="11" HorizontalAlignment="Right" Margin="0,4,0,8" Foreground="#555555"/>
+                                </StackPanel>
+                            </ScrollViewer>
+
+                            <Button x:Name="BtnGenerateReport" Grid.Row="3" Content="Generate Report" Height="40" FontSize="14" FontWeight="Bold"
+                                    Background="White" BorderBrush="Black" BorderThickness="1" Margin="0,8,0,0" Click="GenerateReport_Click"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

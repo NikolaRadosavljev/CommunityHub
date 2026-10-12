@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CommunityHub.Application/CommunityHub.Application.csproj" Id="9c0e5bfb-6747-4d5a-a91a-7998a3c2e589" />
+    <Project Path="src/CommunityHub.Ui/CommunityHub.Ui.csproj" />
+  </Folder>
+</Solution>

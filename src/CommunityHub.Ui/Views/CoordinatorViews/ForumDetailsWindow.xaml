@@ -1,0 +1,119 @@
+﻿<Window x:Class="CommunityHub.Ui.Views.CoordinatorViews.ForumDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Detalji foruma"
+        Height="800"
+        Width="1000"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Naslov foruma -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+            <TextBlock x:Name="ForumTitleTextBlock"
+                       FontSize="22"
+                       FontWeight="Bold"/>
+            <TextBlock x:Name="ForumDescriptionTextBlock"
+                       FontSize="14"
+                       TextWrapping="Wrap"
+                       Margin="0,5,0,0"/>
+            <TextBlock x:Name="ForumStatusTextBlock"
+                       FontSize="12"
+                       Foreground="Gray"
+                       Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Komentari -->
+        <TextBlock Grid.Row="1"
+                   Text="Komentari"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Margin="0,0,0,10"/>
+
+        <DataGrid x:Name="CommentsDataGrid"
+                  Grid.Row="2"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  Margin="0,0,0,15">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Koordinator"
+                                    Binding="{Binding CoordinatorFullName}"
+                                    Width="150"/>
+                <DataGridTextColumn Header="Kvart"
+                                    Binding="{Binding NeighborhoodName}"
+                                    Width="150"/>
+                <DataGridTextColumn Header="Komentar"
+                    Binding="{Binding Content}"
+                    Width="300">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                            <Setter Property="MaxWidth" Value="300"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Datum"
+                                    Binding="{Binding CreatedAt}"
+                                    Width="130"/>
+                <DataGridTextColumn Header="Oznaka"
+                                    Binding="{Binding AuthorTag}"
+                                    Width="70"/>
+                <DataGridTextColumn Header="👍"
+                                    Binding="{Binding Likes}"
+                                    Width="50"/>
+                <DataGridTextColumn Header="👎"
+                                    Binding="{Binding Dislikes}"
+                                    Width="50"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Dodaj komentar -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,15">
+            <TextBlock Text="Dodaj komentar:" Margin="0,0,0,5"/>
+            <TextBox x:Name="NewCommentTextBox"
+                     Height="70"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Pošalji komentar"
+                        Width="160"
+                        Height="35"
+                        Margin="0,0,10,0"
+                        Click="AddCommentButton_Click"/>
+                <Button Content="👍 Like"
+                        Width="100"
+                        Height="35"
+                        Margin="0,0,10,0"
+                        Click="LikeButton_Click"/>
+                <Button Content="👎 Dislike"
+                        Width="100"
+                        Height="35"
+                        Margin="0,0,10,0"
+                        Click="DislikeButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Dugmad -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="CloseForumButton"
+                    Content="Zatvori forum"
+                    Width="150"
+                    Height="35"
+                    Margin="0,0,10,0"
+                    Click="CloseForumButton_Click"/>
+            <Button Content="Nazad"
+                    Width="100"
+                    Height="35"
+                    Click="BackButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

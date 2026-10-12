@@ -1,0 +1,169 @@
+﻿<Window x:Class="CommunityHub.Ui.Views.CitizenStatisticsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Statistika građana i sastanci"
+        Height="800"
+        Width="1000"
+        WindowStartupLocation="CenterScreen">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Statistika građana"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Margin="0,0,0,20"/>
+
+            <StackPanel Grid.Row="1" Margin="0,0,0,15">
+                <TextBlock Text="Odaberi kvart:" Margin="0,0,0,5"/>
+                <ComboBox x:Name="NeighborhoodComboBox"
+                          Width="300"
+                          HorizontalAlignment="Left"
+                          DisplayMemberPath="Name"
+                          SelectionChanged="NeighborhoodComboBox_SelectionChanged"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Margin="0,0,0,20">
+                <TextBlock Text="Broj građana po nivoima:"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"/>
+                <DataGrid x:Name="StatisticsDataGrid"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          Height="160">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Nivo"
+                                            Binding="{Binding Level}"
+                                            Width="200"/>
+                        <DataGridTextColumn Header="Broj građana"
+                                            Binding="{Binding Count}"
+                                            Width="150"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" Margin="0,0,0,20">
+                <TextBlock x:Name="RecommendationTextBlock"
+                           FontSize="14"
+                           Foreground="#2980B9"
+                           FontWeight="Bold"
+                           TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="4" Margin="0,0,0,20">
+                <TextBlock Text="Zakaži sastanak"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"/>
+
+                <TextBlock Text="Tema:" Margin="0,0,0,5"/>
+                <ComboBox x:Name="TopicComboBox"
+                          Width="300"
+                          HorizontalAlignment="Left"
+                          Margin="0,0,0,10"/>
+
+                <TextBlock Text="Sat održavanja:" Margin="0,0,0,5"/>
+                <ComboBox x:Name="HourComboBox"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          Margin="0,0,0,5"/>
+
+                <TextBlock Text="Minut održavanja:" Margin="0,0,0,5"/>
+                <ComboBox x:Name="MinuteComboBox"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          Margin="0,0,0,10"/>
+
+                <TextBlock Text="Početni datum:" Margin="0,0,0,5"/>
+                <DatePicker x:Name="StartDatePicker"
+                            Width="300"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,10"/>
+
+                <TextBlock Text="Krajnji datum:" Margin="0,0,0,5"/>
+                <DatePicker x:Name="EndDatePicker"
+                            Width="300"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,10"/>
+
+                <Button Content="Kreiraj sastanak"
+                        Width="160"
+                        Height="35"
+                        HorizontalAlignment="Left"
+                        Click="CreateMeetingButton_Click"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="5" Margin="0,0,0,20">
+                <TextBlock Text="Zakazani sastanci"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"/>
+                <DataGrid x:Name="MeetingsDataGrid"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          Height="200"
+                          SelectionMode="Single"
+                          SelectionChanged="MeetingsDataGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tema"
+                                            Binding="{Binding Topic}"
+                                            Width="150"/>
+                        <DataGridTextColumn Header="Vreme"
+                                            Binding="{Binding Time}"
+                                            Width="100"/>
+                        <DataGridTextColumn Header="Od datuma"
+                                            Binding="{Binding StartDate}"
+                                            Width="120"/>
+                        <DataGridTextColumn Header="Do datuma"
+                                            Binding="{Binding EndDate}"
+                                            Width="120"/>
+                        <DataGridTextColumn Header="Status"
+                                            Binding="{Binding Status}"
+                                            Width="130"/>
+                        <DataGridTextColumn Header="Zakazan datum"
+                                            Binding="{Binding ScheduledDate}"
+                                            Width="130"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <StackPanel Grid.Row="6" Margin="0,0,0,20">
+                <TextBlock x:Name="TieTextBlock"
+                           FontSize="14"
+                           Foreground="#E74C3C"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"
+                           Visibility="Collapsed"/>
+                <ListBox x:Name="TiedDatesListBox"
+                         Height="100"
+                         Visibility="Collapsed"/>
+                <Button x:Name="ManualScheduleButton"
+                        Content="Zakaži odabrani datum"
+                        Width="200"
+                        Height="35"
+                        HorizontalAlignment="Left"
+                        Margin="0,10,0,0"
+                        Visibility="Collapsed"
+                        Click="ManualScheduleButton_Click"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Nazad"
+                        Width="100"
+                        Height="35"
+                        Click="BackButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Window>

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="QuestPDF" Version="2024.12.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CommunityHub.Application\CommunityHub.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="Views/**/*.xaml" />
+    <Compile Update="Views/**/*.xaml.cs" DependentUpon="%(Filename)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="../BuildingLogo.jpg" Link="BuildingLogo.jpg" />
+    <Resource Include="../PanoramaBuilding.jpg" Link="PanoramaBuilding.jpg" />
+  </ItemGroup>
+
+</Project>

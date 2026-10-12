@@ -1,0 +1,165 @@
+<Page x:Class="CommunityHub.Ui.Views.ManageBuildingRequestsPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CommunityHub.Ui.Views"
+        mc:Ignorable="d"
+        Title="Membership requests"
+        Background="#EAEAEA">
+    <Page.Resources>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="AcceptButton" TargetType="Button">
+            <Setter Property="Background" Value="#FF228B22"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="Accepted">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Denied">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="DeclineButton" TargetType="Button">
+            <Setter Property="Background" Value="#FFDC1414"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="Accepted">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Denied">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- FILTERS -->
+        <Grid Grid.Row="0" Margin="15,15,15,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ComboBox x:Name="StatusFilterComboBox" Grid.Column="0" Margin="0,0,10,0" SelectionChanged="FilterChanged" BorderBrush="Black" BorderThickness="1">
+                <ComboBoxItem Content="State" IsSelected="True"/>
+                <ComboBoxItem Content="Pending" Tag="PENDING"/>
+                <ComboBoxItem Content="Accepted" Tag="ACCEPTED"/>
+                <ComboBoxItem Content="Denied" Tag="DENIED"/>
+            </ComboBox>
+
+            <ComboBox x:Name="SortComboBox" Grid.Column="1" Margin="10,0,0,0" SelectionChanged="FilterChanged" BorderBrush="Black" BorderThickness="1">
+                <ComboBoxItem Content="Date" Tag="DESC" IsSelected="True"/>
+                <ComboBoxItem Content="Oldest first" Tag="ASC"/>
+            </ComboBox>
+        </Grid>
+
+        <!-- SCROLLABLE LIST -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" Margin="15,5,15,15" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+            <ItemsControl x:Name="RequestsList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,15" Padding="15">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0" Margin="0,0,0,5">
+                                    <TextBlock Text="{Binding TenantName}" FontSize="18" FontWeight="Normal" HorizontalAlignment="Left"/>
+                                    <Border HorizontalAlignment="Right" Background="White" BorderThickness="1" Padding="8,2">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Status}" Value="Accepted">
+                                                        <Setter Property="BorderBrush" Value="#FF228B22"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Status}" Value="Pending">
+                                                        <Setter Property="BorderBrush" Value="#FFFFA500"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Status}" Value="Denied">
+                                                        <Setter Property="BorderBrush" Value="#FFDC1414"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <TextBlock Text="{Binding Status}" FontSize="11" FontWeight="SemiBold">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Accepted">
+                                                            <Setter Property="Foreground" Value="#FF228B22"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Pending">
+                                                            <Setter Property="Foreground" Value="#FFFFA500"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Denied">
+                                                            <Setter Property="Foreground" Value="#FFDC1414"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Border>
+                                </Grid>
+
+                                <Grid Grid.Row="1" Margin="0,0,0,15">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <WrapPanel Grid.Row="0" Margin="0,0,0,2">
+                                        <TextBlock Text="{Binding Address}" FontSize="11" Margin="0,0,8,0"/>
+                                        <TextBlock Text="{Binding Settlement}" FontSize="11" Margin="0,0,8,0"/>
+                                        <TextBlock Text="{Binding City}" FontSize="11"/>
+                                    </WrapPanel>
+
+                                    <WrapPanel Grid.Row="1">
+                                        <TextBlock Text="{Binding FlatNumber, StringFormat='Flat number: {0}'}" FontSize="11" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Floor number: ?" FontSize="11" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding CreatedAt, StringFormat='dd.MM.yyyy'}" FontSize="11"/>
+                                    </WrapPanel>
+                                </Grid>
+
+                                <Grid Grid.Row="2">
+                                    <Button Content="Accept" Style="{StaticResource AcceptButton}" HorizontalAlignment="Left" Tag="{Binding}" Click="ApproveItem_Click"/>
+                                    <Button Content="Decline" Style="{StaticResource DeclineButton}" HorizontalAlignment="Right" Tag="{Binding}" Click="RejectItem_Click"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>
